@@ -1,5 +1,5 @@
 <?php
-namespace App\EventListener;
+namespace App\EventSubscriber;
 
 use App\Entity\Customer;
 use App\Entity\Product;
@@ -8,7 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\EventSubscriber\EventSubscriberInterface;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
 
-class EntitySubscriber implements EventSubscriberInterface
+class EntityEventSubscriber implements EventSubscriberInterface
 {
     public function getSubscribedEvents(): array
     {
@@ -26,7 +26,6 @@ class EntitySubscriber implements EventSubscriberInterface
                 $entity->setStatus(StatusEnum::STATUS_NEW);
                 $entity->setCreatedAtValue();
             }
-            return;
         }
     }
 }
