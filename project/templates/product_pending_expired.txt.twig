@@ -1,0 +1,6 @@
+<h3>Products on "pending" status and expired (<7 days)</h1>
+<ul>
+	{% for product in products %}
+		<li>{{ product.issn|e }}: - {{ product.name|e }}</li>
+	{% endfor %}
+</ul>

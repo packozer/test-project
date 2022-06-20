@@ -7,6 +7,7 @@ You need the docker engine and docker-compose, if you already have the docker en
 The following ports are used by our containers:
 * 8080 => phpmyadmin
 * 8741 => symfony
+* 8081 => mailer
 
 ### Installing and Configuring the AWS CLI
 

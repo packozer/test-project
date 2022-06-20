@@ -39,6 +39,21 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByStatusAndCreatedAtLessWeek(string $status, \DateTimeInterface $createdAt)
+    {
+        $qb = $this->createQueryBuilder('p');
+
+        return $qb->Where(
+            $qb->expr()->andX()
+                ->add($qb->expr()->eq('p.status', ':status'))
+                ->add($qb->expr()->lt('p.createdAt', ':createdAt'))
+        )
+            ->setParameters(['status'=> $status, 'createdAt' => $createdAt])
+            ->orderBy('p.createdAt', 'asc')
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return Product[] Returns an array of Product objects
 //     */
