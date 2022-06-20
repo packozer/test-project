@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 class ProductController extends AbstractController
 {
     /**
-     * @Route("/", name="product_list", methods={"GET"})
+     * @Route("/", name="_list", methods={"GET"})
      */
     public function productsAction(ProductRepository $productRepository)
     {
@@ -30,7 +30,7 @@ class ProductController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="product_show", methods={"GET"})
+     * @Route("/{id}", name="_show", methods={"GET"})
      */
     public function show(int $id, ProductRepository $productRepository): JsonResponse
     {
