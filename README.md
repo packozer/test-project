@@ -76,18 +76,6 @@ Add the following hosts in `/etc/hosts`:
 
     127.0.0.1 beegreenbo.localhost.com myecoguide.localhost.com mytracking.localhost.com mypark.localhost.com myalert.localhost.com mybackoffice.localhost.com beegreen.localhost.com diagretail.localhost.com eveio.localhost.com myapi.localhost.com beegreenbo.localhost.com api.beegreen.localhost.com
 
-It's finished !!!
-
-## Makefile Utilities
-
-    make help
-
-If you want to start and stop your containers for IQ
-
-    make start
-    make stop
-
-If you want to start and stop your containers for IQ and BeeGreen
-
-    make start docker=bg
-    make stop docker=bg
+connect to symfony container: 
+    
+    docker exec -it www_docker_symfony bash
