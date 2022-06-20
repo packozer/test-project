@@ -23,6 +23,7 @@ class EntitySubscriber implements EventSubscriberInterface
 
         if ($entity instanceof Product || $entity instanceof Customer) {
             if ($entity->getCreatedAt() === null) {
+                $entity->setStatus(StatusEnum::STATUS_NEW);
                 $entity->setCreatedAtValue();
             }
             return;
