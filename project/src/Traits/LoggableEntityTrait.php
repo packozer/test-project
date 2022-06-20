@@ -28,6 +28,13 @@ trait LoggableEntityTrait
         return $this->createdAt;
     }
 
+    public function setCreatedAt(\DateTime $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
     public function setCreatedAtValue()
     {
         $this->createdAt = new \DateTime();
@@ -38,10 +45,16 @@ trait LoggableEntityTrait
         return $this->updatedAt;
     }
 
-
     public function getDeletedAt(): ?\DateTime
     {
         return $this->deletedAt;
+    }
+
+    public function setDeletedAt(\DateTime $deletedAt): self
+    {
+        $this->deletedAt = $deletedAt;
+
+        return $this;
     }
 
     public function setDeletedAtValue(): self
