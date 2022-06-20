@@ -4,7 +4,7 @@ namespace App\Form;
 
 use App\Entity\Product;
 use App\Entity\Customer;
-use App\Enum\StatusEnumType;
+use App\Enum\StatusEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -19,7 +19,10 @@ class ProductType extends AbstractType
         $builder
             ->add('issn', TextType::class)
             ->add('name', TextType::class)
-            ->add('status', TextType::class)
+            ->add('status', ChoiceType::class, [
+                'choices' => StatusEnum::getAvailabelChoices(),
+                'empty_data' => StatusEnum::STATUS_NEW
+            ])
             ->add('customer', EntityType::class, [
                 'class' => Customer::class
             ])

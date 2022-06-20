@@ -28,9 +28,6 @@ trait LoggableEntityTrait
         return $this->createdAt;
     }
 
-    /**
-     * @ORM\PrePersist
-     */
     public function setCreatedAtValue()
     {
         $this->createdAt = new \DateTime();

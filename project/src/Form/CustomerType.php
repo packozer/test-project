@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Customer;
-use App\Enum\StatusEnumType;
+use App\Enum\StatusEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -22,7 +22,10 @@ class CustomerType extends AbstractType
             ->add('dateOfBirth', DateType::class, [
                 'widget' => 'single_text'
             ])
-            ->add('status', TextType::class)
+            ->add('status', ChoiceType::class, [
+                'choices' => StatusEnum::getAvailabelChoices(),
+                'empty_data' => StatusEnum::STATUS_NEW
+            ])
             ->add('products', CollectionType::class, [
                 'entry_type' => ProductType::class,
                 'mapped' => false,
