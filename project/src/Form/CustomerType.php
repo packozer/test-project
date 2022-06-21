@@ -41,9 +41,7 @@ class CustomerType extends AbstractType
                 'allow_add' => true
             ]);
 
-        $builder->get('products')
-            ->addModelTransformer($this->transformer);
-
+        $builder->get('products')->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver)

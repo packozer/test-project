@@ -33,8 +33,7 @@ class ProductType extends AbstractType
                 'invalid_message' => 'That is not a valid customer uuid',
             ]);
 
-        $builder->get('customer')
-            ->addModelTransformer($this->transformer);
+        $builder->get('customer')->addModelTransformer($this->transformer);
     }
 
     public function configureOptions(OptionsResolver $resolver)

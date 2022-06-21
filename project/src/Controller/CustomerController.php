@@ -36,7 +36,7 @@ class CustomerController extends AbstractController
         $customer = new Customer();
         $form = $this->createForm(CustomerType::class, $customer);
         $data = json_decode($request->getContent(), true);
-        //dd($request->getContent());
+
         $form->submit($data);
 
         if (!$form->isSubmitted() && !$form->isValid()) {
