@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
+use App\Enum\StatusEnum;
 use App\Form\CustomerType;
 use App\Repository\CustomerRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -54,21 +55,21 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="_show", methods={"GET"})
+     * @Route("/{uuid}", name="_show", methods={"GET"})
      */
-    public function show(int $id, Customer $customer): JsonResponse
+    public function show(?Customer $customer, $uuid): JsonResponse
     {
         if (!$customer) {
-            return $this->json('No customer found for id ' . $id, Response::HTTP_NOT_FOUND);
+            return $this->json('No customer found for id ' . $uuid, Response::HTTP_NOT_FOUND);
         }
 
         return $this->json($customer);
     }
 
     /**
-     * @Route("/{id}", name="_edit", methods={"PUT"})
+     * @Route("/{uuid}", name="_edit", methods={"PUT"})
      */
-    public function edit(Request $request, int $id, Customer $customer, ManagerRegistry $doctrine): JsonResponse
+    public function edit(Request $request, Customer $customer, ManagerRegistry $doctrine): JsonResponse
     {
         $form = $this->createForm(CustomerType::class, $customer);
         $data = json_decode($request->getContent(), true);
@@ -77,7 +78,8 @@ class CustomerController extends AbstractController
         if (!$form->isSubmitted() && !$form->isValid()) {
             return $this->json($form, Response::HTTP_BAD_REQUEST);
         }
-
+        
+        $customer->setUpdatedAtValue();
         $doctrine->getManager()->flush();
 
         $data = [
@@ -89,19 +91,19 @@ class CustomerController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="_delete", methods={"DELETE"})
+     * @Route("/{uuid}", name="_delete", methods={"DELETE"})
      */
-    public function delete(int $id, Customer $customer, ManagerRegistry $doctrine): JsonResponse
+    public function delete(?Customer $customer, ManagerRegistry $doctrine): JsonResponse
     {
-        if (!$customer) {
-            return $this->json('No customer found for id ' . $id, 404);
-        }
-
         $entityManager = $doctrine->getManager();
-        $entityManager->remove($customer);
-        $entityManager->flush();
+        if ($customer->getDeletedAt() === null) {
+            $customer->setStatus(StatusEnum::STATUS_DELETED);
+            $customer->setDeletedAtValue();
 
-        return $this->json('Deleted a customer successfully with id ' . $id);
+            $entityManager->persist($customer);
+            $entityManager->flush();
+        }
+        return $this->json($customer);
     }
 
 }

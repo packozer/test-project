@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Doctrine\Common\Collections\ArrayCollection;
-
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=CustomerRepository::class)
@@ -21,10 +21,11 @@ class Customer
     /**
      * @Groups({"customer", "product"})
      * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="uuid", unique=true)
+     * @ORM\GeneratedValue(strategy="CUSTOM")
+     * @ORM\CustomIdGenerator(class="doctrine.uuid_generator")
      */
-    private $id;
+    private $uuid;
 
     /**
      * @Groups({"customer", "product"})
@@ -62,9 +63,9 @@ class Customer
         $this->products = new ArrayCollection();
     }
 
-    public function getId(): ?int
+    public function getId(): ?Uuid
     {
-        return $this->id;
+        return $this->uuid;
     }
 
     public function getFirstName(): ?string

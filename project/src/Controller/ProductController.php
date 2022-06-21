@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Customer;
 use App\Entity\Product;
+use App\Enum\StatusEnum;
 use App\Form\CustomerType;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
@@ -32,10 +33,8 @@ class ProductController extends AbstractController
     /**
      * @Route("/{id}", name="_show", methods={"GET"})
      */
-    public function show(int $id, ProductRepository $productRepository): JsonResponse
+    public function show(?Product $product, $id): JsonResponse
     {
-        $product = $productRepository->find($id);
-
         if (!$product) {
             return $this->json('No product found for id ' . $id, Response::HTTP_NOT_FOUND);
         }
@@ -81,7 +80,7 @@ class ProductController extends AbstractController
         if (!$form->isSubmitted() && !$form->isValid()) {
             return $this->json($form, Response::HTTP_BAD_REQUEST);
         }
-
+        $product->setUpdatedAtValue();
         $doctrine->getManager()->flush();
 
         $data = [
@@ -95,15 +94,15 @@ class ProductController extends AbstractController
     /**
      * @Route("/{id}", name="_delete", methods={"DELETE"})
      */
-    public function delete(int $id, Product $product, ManagerRegistry $doctrine): JsonResponse
+    public function delete(Product $product, ManagerRegistry $doctrine): JsonResponse
     {
-        if (!$product) {
-            return $this->json('No product found for id ' . $id, 404);
-        }
         $entityManager = $doctrine->getManager();
-        $entityManager->remove($product);
-        $entityManager->flush();
-
-        return $this->json('Deleted a product successfully with id ' . $id);
+        if ($product->getDeletedAt() === null) {
+            $product->setStatus(StatusEnum::STATUS_DELETED);
+            $product->setDeletedAtValue();
+            $entityManager->persist($product);
+            $entityManager->flush();
+        }
+        return $this->json($product);
     }
 }

@@ -45,6 +45,11 @@ trait LoggableEntityTrait
         return $this->updatedAt;
     }
 
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
+    }
+
     public function getDeletedAt(): ?\DateTime
     {
         return $this->deletedAt;
