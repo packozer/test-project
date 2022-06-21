@@ -47,7 +47,7 @@ class Product
     /**
      * @Groups({"product"})
      * @ORM\ManyToOne(targetEntity="App\Entity\Customer", inversedBy="products")
-     * @ORM\JoinColumn(nullable=false, referencedColumnName="uuid", onDelete="CASCADE")
+     * @ORM\JoinColumn(nullable=false, referencedColumnName="uuid")
      */
     private $customer;
 

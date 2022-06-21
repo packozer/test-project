@@ -25,7 +25,7 @@ class CustomerController extends AbstractController
     {
         $customers = $customerRepository->findAll();
 
-        return $this->json($customers);
+        return $this->json($customers, Response::HTTP_OK, [], ['groups' => 'customer']);
     }
 
     /**
@@ -36,6 +36,7 @@ class CustomerController extends AbstractController
         $customer = new Customer();
         $form = $this->createForm(CustomerType::class, $customer);
         $data = json_decode($request->getContent(), true);
+        //dd($request->getContent());
         $form->submit($data);
 
         if (!$form->isSubmitted() && !$form->isValid()) {
@@ -46,12 +47,9 @@ class CustomerController extends AbstractController
         $entityManager->persist($customer);
         $entityManager->flush();
 
-        $data = [
-            'content' => $customer,
-            'group' => 'customer'
-        ];
+        $data = ['content' => $customer];
 
-        return $this->json($data, Response::HTTP_CREATED);
+        return $this->json($data, Response::HTTP_CREATED, [], ['groups' => 'customer']);
     }
 
     /**
@@ -63,7 +61,7 @@ class CustomerController extends AbstractController
             return $this->json('No customer found for id ' . $uuid, Response::HTTP_NOT_FOUND);
         }
 
-        return $this->json($customer);
+        return $this->json($customer, Response::HTTP_OK, [], ['groups' => 'customer']);
     }
 
     /**
@@ -82,12 +80,9 @@ class CustomerController extends AbstractController
         $customer->setUpdatedAtValue();
         $doctrine->getManager()->flush();
 
-        $data = [
-            'content' => $customer,
-            'group' => 'customer'
-        ];
+        $data = ['content' => $customer];
 
-        return $this->json($data);
+        return $this->json($data, Response::HTTP_OK, [], ['groups' => 'customer']);
     }
 
     /**
@@ -103,7 +98,7 @@ class CustomerController extends AbstractController
             $entityManager->persist($customer);
             $entityManager->flush();
         }
-        return $this->json($customer);
+        return $this->json($customer, Response::HTTP_OK, [], ['groups' => 'customer']);
     }
 
 }

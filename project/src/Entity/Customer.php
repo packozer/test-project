@@ -63,7 +63,7 @@ class Customer
         $this->products = new ArrayCollection();
     }
 
-    public function getId(): ?Uuid
+    public function getUuid(): ?Uuid
     {
         return $this->uuid;
     }
@@ -116,6 +116,13 @@ class Customer
         return $this;
     }
 
+    /**
+     * @return Collection|Product[]
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
 
     public function addProduct(Product $product): self
     {

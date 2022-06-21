@@ -3,17 +3,27 @@
 namespace App\Form;
 
 use App\Entity\Customer;
+use App\Entity\Product;
 use App\Enum\StatusEnum;
+use App\Form\DataTransformer\IdToProductsTransformer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CustomerType extends AbstractType
 {
+    private $transformer;
+
+    public function __construct(IdToProductsTransformer $transformer)
+    {
+        $this->transformer = $transformer;
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -27,12 +37,13 @@ class CustomerType extends AbstractType
                 'empty_data' => StatusEnum::STATUS_NEW
             ])
             ->add('products', CollectionType::class, [
-                'entry_type' => ProductType::class,
-                'mapped' => false,
-                'allow_add' => true,
-                'by_reference' => false
-            ])
-        ;
+                'entry_type' => TextType::class,
+                'allow_add' => true
+            ]);
+
+        $builder->get('products')
+            ->addModelTransformer($this->transformer);
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

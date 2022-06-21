@@ -27,7 +27,7 @@ class ProductController extends AbstractController
     {
         $products = $productRepository->findAll();
 
-        return $this->json($products);
+        return $this->json($products, Response::HTTP_OK, [], ['groups' => 'product']);
     }
 
     /**
@@ -39,7 +39,7 @@ class ProductController extends AbstractController
             return $this->json('No product found for id ' . $id, Response::HTTP_NOT_FOUND);
         }
 
-        return $this->json($product, Response::HTTP_OK);
+        return $this->json($product, Response::HTTP_OK, [], ['groups' => 'product']);
     }
 
     /**
@@ -60,12 +60,9 @@ class ProductController extends AbstractController
         $entityManager->persist($product);
         $entityManager->flush();
 
-        $data = [
-            'content' => $product,
-            'group' => 'customer'
-        ];
+        $data = ['content' => $product];
 
-        return $this->json($data, Response::HTTP_CREATED);
+        return $this->json($data, Response::HTTP_CREATED, [], ['groups' => 'product']);
     }
 
     /**
@@ -83,12 +80,9 @@ class ProductController extends AbstractController
         $product->setUpdatedAtValue();
         $doctrine->getManager()->flush();
 
-        $data = [
-            'content' => $product,
-            'group' => 'customer'
-        ];
+        $data = ['content' => $product];
 
-        return $this->json($data);
+        return $this->json($data, Response::HTTP_OK, [], ['groups' => 'product']);
     }
 
     /**
@@ -103,6 +97,6 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
         }
-        return $this->json($product);
+        return $this->json($product, Response::HTTP_OK, [], ['groups' => 'product']);
     }
 }
