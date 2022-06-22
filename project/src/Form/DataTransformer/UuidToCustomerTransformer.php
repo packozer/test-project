@@ -3,8 +3,9 @@ namespace App\Form\DataTransformer;
 
 use App\Entity\Customer;
 use Doctrine\ORM\EntityManagerInterface;
+use HttpResponseException;
 use Symfony\Component\Form\DataTransformerInterface;
-use Symfony\Component\Form\Exception\TransformationFailedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UuidToCustomerTransformer implements DataTransformerInterface
 {
@@ -33,16 +34,11 @@ class UuidToCustomerTransformer implements DataTransformerInterface
         }
         $customer = $this->entityManager
             ->getRepository(Customer::class)
-            ->find($uuid)
-        ;
+            ->find($uuid);
 
         if (null === $customer) {
-            throw new TransformationFailedException(sprintf(
-                'An customer with uuid "%s" does not exist!',
-                $uuid
-            ));
+            throw new NotFoundHttpException('UUID customer does not exist');
         }
-
         return $customer;
     }
 }

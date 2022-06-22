@@ -47,13 +47,12 @@ class LogEntry implements \JsonSerializable
      */
     private $createdAt;
 
-    public function __construct(RequestEvent $event, User $user = null)
+    public function __construct(RequestEvent $event)
     {
         $this->setUri($event->getRequest()->getUri());
         $this->setHeaders($event->getRequest()->headers->all());
         $this->setBodyContent($event->getRequest()->getContent());
         $this->setRequestContent($event->getRequest()->getContent());
-        $this->setUser($user);
     }
 
     public function getId(): ?int

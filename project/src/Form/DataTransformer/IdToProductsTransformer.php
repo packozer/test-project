@@ -58,7 +58,7 @@ class IdToProductsTransformer implements DataTransformerInterface
             if (null === $entity) {
                 throw new TransformationFailedException(sprintf(
                     'A %s with id "%s" does not exist!',
-                    $this->entityName,
+                    $entity,
                     $id
                 ));
             }

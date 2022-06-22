@@ -8,8 +8,10 @@ use App\Enum\StatusEnum;
 use App\Form\CustomerType;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,10 +59,19 @@ class ProductController extends AbstractController
         }
 
         $entityManager = $doctrine->getManager();
-        $entityManager->persist($product);
-        $entityManager->flush();
+        try {
+            $entityManager->persist($product);
+            $entityManager->flush();
+        } catch (UniqueConstraintViolationException $exception) {
+            $message = $exception->getMessage();
+            $uniqueConstraintReferenceViolation = strstr($message, 'UNIQ');
+            if ($uniqueConstraintReferenceViolation) {
+                throw new BadRequestException("Issn field must be unique");
+            }
 
-        $data = ['content' => $product];
+        }
+
+            $data = ['content' => $product];
 
         return $this->json($data, Response::HTTP_CREATED, [], ['groups' => 'product']);
     }

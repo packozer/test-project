@@ -11,14 +11,13 @@ use Psr\Container\ContainerInterface;
 class LogEntrySubscriber implements EventSubscriberInterface
 {
     protected $container;
-    protected $token;
+    protected $user;
     protected $logger;
 
     public function __construct(ContainerInterface $container, LoggerInterface $logger)
     {
         $this->container = $container;
         $this->logger = $logger;
-        $this->token = $this->container->get('security.token_storage')->getToken();
     }
 
     public static function getSubscribedEvents()
@@ -30,11 +29,7 @@ class LogEntrySubscriber implements EventSubscriberInterface
 
     public function onKernelRequest(RequestEvent $event)
     {
-        $log = new LogEntry($event, $this->token ?? null);
+        $log = new LogEntry($event);
         $this->logger->info('', $log->jsonSerialize());
-        //$this->container->get('monolog.logger.http_log_database')->info(null, ["log" => $log]);
-
-        //$this->container->get('monolog.logger.http_log_file')->info(json_encode($log));
-
     }
 }
