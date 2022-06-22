@@ -1,12 +1,12 @@
 <?php
 namespace App\Entity;
 
-use App\Repository\LogRepository;
+use App\Repository\LogEntryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 /**
- * @ORM\Entity(repositoryClass=LogRepository::class)
+ * @ORM\Entity(repositoryClass=LogEntryRepository::class)
  */
 class LogEntry implements \JsonSerializable
 {

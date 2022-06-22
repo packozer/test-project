@@ -3,10 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Customer;
-use App\Entity\Product;
 use App\Enum\StatusEnum;
 use App\Form\DataTransformer\IdToProductsTransformer;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -33,7 +31,7 @@ class CustomerType extends AbstractType
                 'widget' => 'single_text'
             ])
             ->add('status', ChoiceType::class, [
-                'choices' => StatusEnum::getAvailabelChoices(),
+                'choices' => StatusEnum::getAvailableChoices(),
                 'empty_data' => StatusEnum::STATUS_NEW
             ])
             ->add('products', CollectionType::class, [

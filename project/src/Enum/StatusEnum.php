@@ -11,7 +11,7 @@ class StatusEnum
     const STATUS_APPROVED  = 'approved';
     const STATUS_INACTIVE  = 'inactive';
 
-    public function getAvailabelChoices()
+    public static function getAvailableChoices(): array
     {
         return [
             self::STATUS_PENDING => self::STATUS_PENDING ,
@@ -19,6 +19,7 @@ class StatusEnum
             self::STATUS_IN_REVIEW => self::STATUS_IN_REVIEW,
             self::STATUS_DELETED => self::STATUS_DELETED,
             self::STATUS_APPROVED => self::STATUS_APPROVED,
+            self::STATUS_INACTIVE => self::STATUS_INACTIVE,
         ];
     }
 }

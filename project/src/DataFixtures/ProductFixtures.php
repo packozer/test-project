@@ -19,7 +19,7 @@ class ProductFixtures extends Fixture
         	for ($o=0; $o < 2 ; $o++) { 
         		
         	
-	            foreach ((new StatusEnum())->getAvailabelChoices() as $statusValue) {
+	            foreach ((new StatusEnum())->getAvailableChoices() as $statusValue) {
 	                $product = $this->createProduct(
 	                    $faker->bothify('?#?#-#?#?'),
 	                    $faker->company,

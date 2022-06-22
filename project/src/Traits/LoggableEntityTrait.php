@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Traits;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 trait LoggableEntityTrait

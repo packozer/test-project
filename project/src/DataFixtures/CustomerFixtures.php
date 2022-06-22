@@ -19,7 +19,7 @@ class CustomerFixtures extends Fixture
         $customerRefIteration = 0;
 
         for ($i=0; $i < 5; $i++) { 
-            foreach ((new StatusEnum())->getAvailabelChoices() as $statusValue) {
+            foreach ((new StatusEnum())->getAvailableChoices() as $statusValue) {
                 $customer = $this->createOneCustomer(
                     $faker->firstName,
                     $faker->lastName,

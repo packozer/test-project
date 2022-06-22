@@ -3,7 +3,6 @@ namespace App\Form\DataTransformer;
 
 use App\Entity\Customer;
 use Doctrine\ORM\EntityManagerInterface;
-use HttpResponseException;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 

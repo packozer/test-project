@@ -26,7 +26,7 @@ class ProductType extends AbstractType
             ->add('issn', TextType::class)
             ->add('name', TextType::class)
             ->add('status', ChoiceType::class, [
-                'choices' => StatusEnum::getAvailabelChoices(),
+                'choices' => StatusEnum::getAvailableChoices(),
                 'empty_data' => StatusEnum::STATUS_NEW
             ])
             ->add('customer', TextType::class, [

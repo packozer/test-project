@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Customer;
 use App\Entity\Product;
 use App\Enum\StatusEnum;
-use App\Form\CustomerType;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;

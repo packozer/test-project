@@ -3,7 +3,6 @@
 namespace App\Command;
 
 use App\Enum\StatusEnum;
-use App\Enum\StatusEnumType;
 use App\Repository\ProductRepository;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
